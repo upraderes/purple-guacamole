@@ -7,6 +7,7 @@ import sys
 application_key = sys.argv[1] # Application Key
 application_secret = sys.argv[2] # Application Secret
 consumer_key = sys.argv[3] # Consumer Key
+nodepool_conf = sys.argv[4]
 
 
 # Instantiate an OVH Client.
@@ -29,6 +30,6 @@ for service in client.get('/cloud/project'):
             pool_id = pool['id']
             result = client.put(rf'/cloud/project/{service_name}/kube/{kube_id}/nodepool/{pool_id}', 
                     autoscale=False, # Enable the auto-scaling on the pool (type: boolean)
-                    desiredNodes=0 # New number of nodes wanted in the nodepool (type: long)
+                    desiredNodes=int(nodepool_conf) # New number of nodes wanted in the nodepool (type: long)
                 )
             print(rf"Nodepool {pool_id} updated")
